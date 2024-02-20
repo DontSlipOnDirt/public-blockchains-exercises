@@ -57,6 +57,7 @@
 variable1 = 1;
 variable2 = 2;
 variable3 = 3;
+variable3 = 3;
 
 // b. Hint: This function needs a name after the word function.
 function sayHello() {
