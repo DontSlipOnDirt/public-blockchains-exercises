@@ -41,9 +41,11 @@ console.log(pathToDotEnv);
 
 // Edit this line, then load the .env file:
 // pathToDotEnv = path.join(...);
+pathToDotEnv = path.join(process.cwd(), '.env');
 console.log(pathToDotEnv);
 
 // Your code here.
+require('dotenv').config(pathToDotEnv); //change path
 
 // c. Bonus. Load the 'fs' native module and use the method `existsSync` to 
 // check if the path to the .dotenv file is correct.

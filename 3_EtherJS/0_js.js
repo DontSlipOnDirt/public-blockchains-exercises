@@ -35,7 +35,6 @@
 // be executed, until you tell the process to stop. 
 
 // This line will tell the process to stop.
-process.exit(0);
 console.log('I am a sad line...I will not be printed to console :(');
 
 // a. Move the sad line above and below `process.exit(0);` to check that the
@@ -51,7 +50,11 @@ console.log('I am a sad line...I will not be printed to console :(');
 
 let exercise = 0;
 
-// Your code here!
+exit = () => {
+    console.log(exercise);
+}
+
+exit()
 
 // c. Bonus. Did you realize that JavaScript/Node.JS has three different ways
 // of declaring a function?
@@ -67,8 +70,24 @@ let exercise = 0;
 // Checkpoint. Under what conditions can you reuse the same name (i.e., `exit`)
 // for all three functions? 
 
-// Your code here!
+// My answer: in different scopes
 
+{
+    function exit() {
+        console.log(exercise + ' is the current exercise number');
+
+    }
+
+    exit();
+} // has to be in different scope or else the function will change from initial definition
+
+if (exercise === 1) {
+    exit => () => console.log(exercise);
+}
+
+exit = () => {
+    console.log('hijacked');
+}
 
 // Exercise 1. NPM Warm Up.
 ///////////////////////////
@@ -86,6 +105,6 @@ exercise = 1;
 
 // Hint3: don't forget to uncomment the call to `exit()`.
 
-require('dotenv').config();
+// require('dotenv').config();
 
-// exit();
+exit();
