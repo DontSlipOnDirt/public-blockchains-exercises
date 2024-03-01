@@ -51,7 +51,13 @@ require('dotenv').config(pathToDotEnv); //change path
 // check if the path to the .dotenv file is correct.
 
 // Your code here.
-
+const fs = require('fs');
+if (fs.existsSync
+    (pathToDotEnv)) {
+    console.log('File exists');
+} else {
+    console.log('File does not exist');
+}
 
 
 
@@ -78,7 +84,7 @@ exercise = 2;
 // MetaMask, e.g.: https://www.youtube.com/watch?v=KSY_bSkzb9c
  
 // See if it worked.
-console.log(process.env);
+// console.log(process.env);
 
 // exit();
 
@@ -95,6 +101,9 @@ exercise = '3a';
 // Hint: https://javascript.info/ifelse
 
 // Your code here!
+if (process.env.METAMASK_ACCOUNT_1 === '') {
+    console.log('Warning: METAMASK_ACCOUNT_1 is empty');
+}
 
 // exit();
 
@@ -105,6 +114,8 @@ exercise = '3a';
 exercise = '3b';
 
 // Your code here!
+let variablesToCheck = Object.keys(process.env);
+console.log(variablesToCheck.length);
 
 // exit();
 
@@ -118,12 +129,18 @@ exercise = '3b';
 
 // Solution 1. forEach.
 variablesToCheck.forEach(v => {
-    // Your code here!
+    if (process.env[v] === '') {
+        console.log('Warning: ' + v + ' is empty');
+    }
 });
 
 // Solution 2. For-loop.
 
-// Your code here!
+for (let i = 0; i < variablesToCheck.length; i++) {
+    if (process.env[variablesToCheck[i]] === '') {
+        console.log('Warning: ' + variablesToCheck[i] + ' is empty');
+    }
+}
 
 
 // exit();
