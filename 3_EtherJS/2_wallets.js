@@ -20,6 +20,12 @@ const ethers = require("ethers");
 // and the mnenomic phrase.
 // Hint: ethers.Wallet.createRandom();
 
+wallet = ethers.Wallet.createRandom()
+
+console.log("Address:", wallet.address);
+console.log("Private key:", wallet.privateKey);
+console.log("Mnemonic phrase:", wallet.mnemonic.phrase);
+
 
 // exit();
 
@@ -28,7 +34,7 @@ const ethers = require("ethers");
 
 exercise = '1b';
 
-let baseDevPath = "m/44'/60'/0'/0/";
+let baseDevPath = "m/44'/60'/0'/0/0";
 
 // Wait is the derivation path? 
 // Basically, the mnemonic alone isn't enough to determine an address
@@ -38,10 +44,17 @@ let baseDevPath = "m/44'/60'/0'/0/";
 // https://vault12.com/securemycrypto/crypto-security-basics/what-is-bip39/
 
 
+
 console.log("Derivation path:", wallet.path);
+console.log("Base Derivation path:", baseDevPath);
 
 // Your code here!
 
+if (wallet.path === baseDevPath) {
+    console.log("The derivation path is correct.");
+} else {
+    console.log("The derivation path is incorrect.");
+}
 
 // exit();
 
@@ -57,4 +70,20 @@ exercise = 2;
 
 // Your code here!
 
-// exit();
+// make random mnemonic phrase
+const mnemonic = 'test test test test test test test test test test test junk';
+// create wallet from mnemonic phrase
+// const hdwallet = ethers.Wallet.fromPhrase(mnemonic);
+// console.log(hdwallet.path);
+
+// Create an instance of ethers.utils.HDNode
+const hdNode = ethers.utils.HdNode.fromPhrase(mnemonic);
+
+for (let i = 1; i < 10; i++) {
+    const derivedWallet = hdNode.derivePath(baseDevPath + "/" + i);
+    console.log("Address:", derivedWallet.address);
+    console.log("Private key:", derivedWallet.privateKey);
+}
+
+
+exit();
