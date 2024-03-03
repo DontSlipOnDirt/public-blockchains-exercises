@@ -16,8 +16,9 @@ const path = require('path');
 
 // Hint: As you did in file 1_wallet.
 
-// Your code here!
-
+pathToDotEnv = path.join(process.cwd(), '.env');
+require('dotenv').config(pathToDotEnv);
+const ethers = require('ethers');
 
 // Exercise 1. Connect to Mainnet (a.k.a welcome async!).
 /////////////////////////////////////////////////////////
@@ -45,9 +46,7 @@ const path = require('path');
 // Hint: check EthersJS docs for the method `JsonRpcProvider` and what 
 // parameters it needs (nested hint: you need something from the .env file).
 
-
-// Your code here!
-
+const mainNetProvider = new ethers.JsonRpcProvider(process.env.ALCHEMY_MAINNET_API_URL);
 
 // b. Verify that the network's name is "mainnet" and the chain id is 1.
 
@@ -72,8 +71,10 @@ const path = require('path');
 // However, the async function could also be named, and the result is:
 const network = async () => {
     
-    // Your code here!
-
+    const network = await mainNetProvider.getNetwork();
+    const chainId = Number(network.chainId);
+    console.log('Network:', network.name);
+    console.log('Chain ID:', chainId);
 };
 
 // which you can then call:
@@ -102,11 +103,11 @@ const network = async () => {
 // // Look up the current block number
 const blockNum = async () => {
     
-    // Your code here!
-
+    const currBlockNum = await mainNetProvider.getBlockNumber();
+    return currBlockNum;
 };
 
-// blockNum();
+// blockNum().then(data => console.log('Current block num: ' + data));
 
 // b. The Ethereum mainnet is one of the most secure blockchains in the world.
 // The testnets of Ethereum are a bit less secure because they might have 
@@ -116,14 +117,18 @@ const blockNum = async () => {
 // Connect to the Goerli test net, get the latest block number and print
 // the difference in chain length with mainnet.
 
+const testNetProvider = new ethers.JsonRpcProvider(process.env.ALCHEMY_GOERLI_API_URL);
 
 // Look up the current block number in Mainnet and Goerli.
 const blockDiff = async () => {
-
+    const currBlockNum = await mainNetProvider.getBlockNumber();
+    console.log('Current block number:', currBlockNum);
+    const currBlockNum2 = await testNetProvider.getBlockNumber();
+    console.log('Current block number:', currBlockNum2);
+    return;
 };
 
 // blockDiff();
-
 
 // Exercise 3. Block time.
 //////////////////////////
@@ -145,7 +150,7 @@ const checkBlockTime = async (providerName = "mainnet", blocks2check = 3) => {
 
     // JS Ternary Operator.
     let provider = providerName.toLowerCase() === "mainnet" ? 
-        mainnetProvider : goerliProvider;
+        mainNetProvider : testNetProvider;
 
     // Get initial block number and timestamp.
     let d = Date.now();
@@ -212,18 +217,30 @@ const checkBlockTime2 = async (providerName = "mainnet", blocks2check = 3) => {
 // a. Look up the last block in Mainnet and print it to console.
 // Hint: first get the last block number, and then use .getBlock(blockNumber).
 
+const lastBlock = async () => {
+    const currBlock = blockNum().then(data => mainNetProvider.getBlock(data));
+    return currBlock;
+};
+
 // b. How many transactions does the block contains?
+
+// lastBlock().then(data => console.log(data.transactions.length));
 
 // c. Pick a transaction and examine its receipt.
 // Hint: use getTransactionReceipt().
+
+// lastBlock()
+//     .then(data => {
+//         transact = data.getTransaction(10);
+//         console.log(mainNetProvider.getTransactionReceipt(transact));
+// });
 
 // d. Transactions can be prefetched, so that you save one blockchain call.
 // Hint: pass `true` as second parameter to .getBlock(blockNumber, true).
 
 const blockInfo = async () => {
-    
-    // Your code here!
-
+    const currBlock = blockNum().then(data => mainNetProvider.getBlock(data, true));
+    return currBlock;
 };
 
 // blockInfo();
@@ -236,8 +253,9 @@ const blockInfo = async () => {
 
 const ens = async () => {
     
-    // Your code here!
-
+    let unimaAddress = await testNetProvider.resolveName('unima.eth');
+    console.log('unima.eth:', unimaAddress);
+    return unimaAddress;
 };
 
 // ens();
@@ -260,9 +278,12 @@ const ens = async () => {
 
 const balance = async (ensName = "unima.eth") => {
 
-   // Your code here!
+    let ethBalance = await mainNetProvider.getBalance(ensName);
+    console.log('ETH balance:', ethers.formatEther(ethBalance));
+    return ethBalance;
 
 };
+balance("unima.eth");
 
 // balance("vitalik.eth");
 
