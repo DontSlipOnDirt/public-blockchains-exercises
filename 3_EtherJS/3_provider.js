@@ -283,7 +283,8 @@ const balance = async (ensName = "unima.eth") => {
     return ethBalance;
 
 };
-balance("unima.eth");
+
+// balance("unima.eth");
 
 // balance("vitalik.eth");
 
@@ -315,11 +316,15 @@ const linkABI = require('./link_abi.json');
 // https://faucets.chain.link/goerli
 
 const link = async () => {
-   
-    // Your code here!
+    let newContract = new ethers.Contract(linkAddress, linkABI, mainNetProvider);
+    let balance = await newContract.balanceOf('unima.eth');
+    console.log('LINK balance unima:', ethers.utils.formatEther(balance));
+    
+    // let balance2 = await newContract.balanceOf('vitalik.eth');
+    // console.log('LINK balance vitalik:', ethers.utils.formatEther(balance2));
 };
 
 
-// link();
+link();
 
 
