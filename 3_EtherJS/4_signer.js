@@ -22,11 +22,13 @@ const path = require('path');
 // a. Require the `dotenv` and `ethers` packages.
 // Hint: As you did in file 1_wallet and 2_provider.
 
-// Your code here!
+pathToDotEnv = path.join(process.cwd(), '.env');
+require('dotenv').config(pathToDotEnv);
+const ethers = require('ethers');
 
 // b. Create a Sepolia provider.
 
-// Your code here!
+const provider = new ethers.JsonRpcProvider(process.env.ALCHEMY_SEPOLIA_API_URL);
 
 // Exercise 1. Create a Signer.
 ///////////////////////////////
@@ -42,14 +44,14 @@ const path = require('path');
 // Hint: a signer is a wallet.
 // Hint2: if you get an error here, check that the private key begins with "0x".
 
-// Your code here!
+const signer = new ethers.Wallet(process.env.METAMASK_1_PRIVATE_KEY, provider);
 
 // Exercise 2. Sign something.
 //////////////////////////////
 
 const sign = async (message = 'Hello world') => {
-    
-    // Your code here!
+    let signature = await signer.signMessage(message);
+    console.log('Signature:', signature);
 };
 
 // sign();
@@ -64,11 +66,12 @@ const sign = async (message = 'Hello world') => {
 // Hint: .getNonce()
 
 const connect = async() => {
-    
-    // Your code here!
+    let connectedSigner = await signer.connect(provider);
+    await console.log('Connected signer:', connectedSigner);
+    await console.log('Nonce: ', connectedSigner.getNonce());
 };
 
-// connect();
+connect();
 
 // c. Replace the signer created above at exercise 1 with one that takes the 
 // Sepolia provider as second parameter. This is necessary even
