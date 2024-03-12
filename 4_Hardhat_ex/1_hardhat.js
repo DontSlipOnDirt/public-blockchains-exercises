@@ -11,6 +11,7 @@ const path = require('path');
 pathToDotEnv = path.join(process.cwd(), '.env');
 require('dotenv').config(pathToDotEnv);
 const ethers = require('ethers');
+const { sign } = require('crypto');
 
 
 // Exercise 1. Create a JSON RPC Provider for the Hardhat blockchain.
@@ -29,9 +30,10 @@ const hardHatProvider = new ethers.JsonRpcProvider("http://127.0.0.1:8545/");
 
 const networkInfo = async () => {
    
-    NUMA = await hardHatProvider.getNetwork();
-    NUMAInfo = NUMA.get
-    console.log(NUMAInfo);
+    const NUMA = await hardHatProvider.getNetwork();
+    const chainId = Number(NUMA.chainId);
+    console.log('Network:', NUMA.name);
+    console.log('Chain ID:', chainId);
 };
 
 // networkInfo();
@@ -43,16 +45,17 @@ const networkInfo = async () => {
 // Hint: you will find the info printed to console after you start the hardhat
 // blockchain.
 
-let hhPrivateKey = "FILL_THIS_VALUE";
+let hhPrivateKey = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
-// Your code here!
+signer = new ethers.Wallet(hhPrivateKey, hardHatProvider);
 
 // b. Print the next nonce necessary to send a transaction.
 // Hint: .getNonce()
 
 const getNonce = async() => {
 
-    // Your code here!
+    const nonce = await signer.getNonce()
+    console.log('Nonce:', nonce);
 };
 
 // getNonce();
