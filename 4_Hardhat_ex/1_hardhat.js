@@ -11,6 +11,7 @@ const path = require('path');
 pathToDotEnv = path.join(process.cwd(), '.env');
 require('dotenv').config(pathToDotEnv);
 const ethers = require('ethers');
+const { sign } = require('crypto');
 
 
 // Exercise 1. Create a JSON RPC Provider for the Hardhat blockchain.
@@ -29,9 +30,10 @@ const hardHatProvider = new ethers.JsonRpcProvider("http://127.0.0.1:8545/");
 
 const networkInfo = async () => {
    
-    NUMA = await hardHatProvider.getNetwork();
-    NUMAInfo = NUMA.get
-    console.log(NUMAInfo);
+    const NUMA = await hardHatProvider.getNetwork();
+    const chainId = Number(NUMA.chainId);
+    console.log('Network:', NUMA.name);
+    console.log('Chain ID:', chainId);
 };
 
 // networkInfo();
@@ -41,25 +43,20 @@ const networkInfo = async () => {
 // Exercise 3. Signer on the Hardhat blockchain.
 ////////////////////////////////////////////////
 
-// a. Connect one a signer with one of the default private keys on
-// the Hardhat blockchain.
-// Hint: check the Hardhat console output.
+// Hint: you will find the info printed to console after you start the hardhat
+// blockchain.
 
-// Your code here.
+let hhPrivateKey = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
-// b. Check the balance of the signer.
+signer = new ethers.Wallet(hhPrivateKey, hardHatProvider);
 
-const checkBalance = async () => {
-    // Your code here.
-};
-
-// checkBalance();
-
-// c. Print the signer's next nonce necessary to send a transaction.
+// b. Print the next nonce necessary to send a transaction.
 // Hint: .getNonce()
 
 const getNonce = async() => {
-    // Your code here.
+
+    const nonce = await signer.getNonce()
+    console.log('Nonce:', nonce);
 };
 
 // getNonce();
