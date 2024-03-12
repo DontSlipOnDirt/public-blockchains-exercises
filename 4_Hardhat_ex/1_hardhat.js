@@ -7,7 +7,9 @@
 // a. Require the `dotenv` and `ethers` packages.
 // Hint: As you did multiple times now.
 
-// Your code here!
+pathToDotEnv = path.join(process.cwd(), '.env');
+require('dotenv').config(pathToDotEnv);
+const ethers = require('ethers');
 
 
 // Exercise 1. Create a JSON RPC Provider for the Hardhat blockchain.
@@ -16,7 +18,7 @@
 // Hint: you will find the info printed to console after you start the hardhat
 // blockchain.
 
-// Your code here!
+const hardHatProvider = new ethers.JsonRpcProvider(process.env.ALCHEMY_MAINNET_API_URL);
 
 // Exercise 2. Let's query the provider.
 ////////////////////////////////////////
