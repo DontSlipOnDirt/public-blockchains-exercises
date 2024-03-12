@@ -7,6 +7,7 @@
 // a. Require the `dotenv` and `ethers` packages.
 // Hint: As you did multiple times now.
 
+const path = require('path');
 pathToDotEnv = path.join(process.cwd(), '.env');
 require('dotenv').config(pathToDotEnv);
 const ethers = require('ethers');
@@ -18,7 +19,7 @@ const ethers = require('ethers');
 // Hint: you will find the info printed to console after you start the hardhat
 // blockchain.
 
-const hardHatProvider = new ethers.JsonRpcProvider(process.env.ALCHEMY_MAINNET_API_URL);
+const hardHatProvider = new ethers.JsonRpcProvider("http://127.0.0.1:8545/");
 
 // Exercise 2. Let's query the provider.
 ////////////////////////////////////////
@@ -28,7 +29,9 @@ const hardHatProvider = new ethers.JsonRpcProvider(process.env.ALCHEMY_MAINNET_A
 
 const networkInfo = async () => {
    
-    // Your code here!
+    NUMA = await hardHatProvider.getNetwork();
+    NUMAInfo = NUMA.get
+    console.log(NUMAInfo);
 };
 
 // networkInfo();
