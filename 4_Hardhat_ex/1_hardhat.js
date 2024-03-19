@@ -69,12 +69,33 @@ const getNonce = async() => {
 // accounts on Metamask (e.g., the one used to make the submissions in 
 // this course).
 
-const account2 = process.env.METAMASK_2_ADDRESS;
+const account2 = process.env.METAMASK_1_ADDRESS;
 
 const sendTransaction = async () => {
+    
+    let b1 = await hardHatProvider.getBalance(signer.address);
+    let b2 = await hardHatProvider.getBalance(account2);
+    b1 = ethers.formatEther(b1);
+    b2 = ethers.formatEther(b2);
 
-    // Your code here!
+    tx = await signer.sendTransaction({
+        to: account2,
+        value: ethers.parseEther("0.01")
+    });
+    
+    console.log('Transaction is in the mempool...');
+    await tx.wait();
+
+    console.log('Transaction mined!');
+
+    let updatedB1 = await hardHatProvider.getBalance(signer.address);
+    let updatedB2 = await hardHatProvider.getBalance(account2);
+    updatedB1 = ethers.formatEther(updatedB1);
+    updatedB2 = ethers.formatEther(updatedB2);
+
+    console.log('Balance for', signer.address, 'changed from', b1, 'to', updatedB1);
+    console.log('Balance for', account2, 'changed from', b2, 'to', updatedB2);
 };
 
-// sendTransaction();
+sendTransaction();
 
