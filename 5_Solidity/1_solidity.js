@@ -44,14 +44,20 @@
 // a. What is the meaning of the `pragma` directive at the top of the file?
 // Hint: https://solidity-by-example.org/hello-world/
 
+// version of Solidity
+
 // b. The pragma value must be compatible with the version of solidity
 // in `hardhat.config.js. Try to set the value to a lower or higher number
 // and to compile the Lock file. What happens?
 // Hint: npx hardhat compile
 
+// lower works, higher doesn't
+
 // c. Checkpoint. What is the meaning of that caret symbol (^) ?
 // Hint: https://docs.soliditylang.org/en/develop/layout-of-source-files.html#version-pragma
 // Hint2: https://bytearcher.com/articles/semver-explained-why-theres-a-caret-in-my-package-json/
+
+// the carat symbol in solidity means that the version of solidity can be lower than the version specified
 
 // c. Before `pragma` there is an important comment tha sets the license of
 // the contract. Pick a license for your contract.
@@ -72,7 +78,7 @@
 // 2. Imported code is deployed with your contract code;
 // 3. console.log works only on the local Hardhat blockchain (i.e., not on
 //    Goerli, Unima, etc.), so you should remove it before deployment on
-//    ohter nets.
+//    other nets.
 //
 // Uncomment the import, and add a few console.log to the Lock code (e.g.,
 // in the constructor), then deploy it.
