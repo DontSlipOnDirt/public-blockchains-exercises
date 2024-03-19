@@ -20,10 +20,10 @@
 // Then comment the return statement below and proceed with something more
 // interesting.
 
-const hre = require("hardhat");
-console.log('Hardhat\'s default network:', hre.config.defaultNetwork);
+// const hre = require("hardhat");
+// console.log('Hardhat\'s default network:', hre.config.defaultNetwork);
 
-return;
+// return;
 
 
 // Exercise 1. Understand Ethers in Hardhat.
@@ -37,16 +37,17 @@ return;
 
 // a. Require ethers and print the version of Ethers, just to be sure.
 
-// Your code here!
+const ethers = require('ethers');
+// console.log('Ethers version:', ethers.version);
 
-return;
+// return;
 
 // b. Hardhat uses v5 because it offers a plugin that is a wrapped version of
 // Ethers which makes things a little easier. This is available under
 // hre.ethers (require statement above).
 // Print the version of this plugin, it should be the same as above.
 
-// Your code here!
+console.log('Ethers version:', ethers.version);
 
 return;
 
