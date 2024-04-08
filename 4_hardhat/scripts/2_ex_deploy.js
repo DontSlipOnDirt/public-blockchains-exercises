@@ -20,7 +20,7 @@
 // Then comment the return statement below and proceed with something more
 // interesting.
 
-// const hre = require("hardhat");
+const hre = require("hardhat");
 // console.log('Hardhat\'s default network:', hre.config.defaultNetwork);
 
 // return;
@@ -47,9 +47,9 @@ const ethers = require('ethers');
 // hre.ethers (require statement above).
 // Print the version of this plugin, it should be the same as above.
 
-console.log('Ethers version:', ethers.version);
+// console.log('Ethers version:', ethers.version);
 
-return;
+// return;
 
 // Exercise 1. Create a new Solidity contract.
 //////////////////////////////////////////////
@@ -83,7 +83,7 @@ return;
 // a. Update with your contract's name and address.
 // Hint: The address is known only after deployment.
 const contractName = "Lock2";
-const contractAddress = "FILL_THIS_VALUE";
+const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 // Let's continue inside the async main function (the recommended Hardhat
 // pattern of execution).
@@ -95,18 +95,20 @@ async function main() {
   // execute: npx hardhat node
   // Hint: hre.ethers.getSigners() returns an array.
 
-  // Your code here!
+  const hhSigner = (await hre.ethers.getSigners())[0];
+  // console.log('Signer address:', await hhSigner.getAddress());
 
-  return;
+  // return;
 
   // c. Get your new contract. Hardhat Ethers automatically fetches the ABI from
   // the artifacts, so you don't need to specify it. Use the method
   // hre.ethers.getContractAt(<name>, <address>, <signer>)
   // then print the contract address.
 
-  // Your code here!
+  const lock = await hre.ethers.getContractAt(contractName, contractAddress, hhSigner);
+  // console.log('Contract address:', await lock.getAddress());
 
-  return;
+  // return;
 
   // d. Bonus. You can get the contract also without Hardhat's wrapped Ethers.
   // The standard (here V5) Ethers.JS requires a bit more code, but is is 
@@ -138,8 +140,7 @@ async function main() {
   const readContract = async (lockContract = lock) => {
       
     // Print the owner of the lock.
-   
-    // Your code here!
+    console.log('Owner:', await lockContract.owner());
 
     // Print the unlock time. 
     // Be careful! You will get a BigInt, you need first
@@ -148,7 +149,9 @@ async function main() {
     // https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
     // https://stackoverflow.com/questions/53970655/how-to-convert-bigint-to-number-in-javascript
 
-    // Your code here!
+    const unlockTime = await lockContract.unlockTime();
+    console.log('Unlock time:', new Date(Number(unlockTime) * 1000));
+
   };
 
   // await readContract();
