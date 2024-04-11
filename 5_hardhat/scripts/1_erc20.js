@@ -37,13 +37,15 @@ async function deployMango() {
 
     await mango.waitForDeployment();
 
-    console.log(`Mango deployed to: ${mango.address} with ${total} total supply.`);
+    console.log(`Mango deployed to: ${mango.target} with ${total} total supply.`);
 };
 
 deployMango().catch((error) => {
     console.error(error);
     process.exitCode = 1;
   });
+
+return;
 
 // Try to execute the transfer and the transferFrom methods.
 
@@ -57,7 +59,7 @@ const cName = "MyERC20";
 
 // V5 Syntax for executing within an Hardhat project.
 const notUniMaUrl = process.env.NOT_UNIMA_URL_1;
-const notUniMaProvider = new ethers.providers.JsonRpcProvider(notUniMaUrl);
+const notUniMaProvider = new ethers.JsonRpcProvider(notUniMaUrl);
 
 // The deployer is the first address in the `accounts` field inside a 
 // network declaration in hardhat.config.js. 
