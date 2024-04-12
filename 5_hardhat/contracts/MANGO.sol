@@ -20,7 +20,7 @@ contract MANGO is IERC20 {
     // Implementation of interface...
 
     string public constant name = "MANGO";
-    string public constant symbol = "MANG";
+    string public constant symbol = "MANGO";
     uint8 public constant decimals = 18;
 
     mapping(address => uint256) balances;

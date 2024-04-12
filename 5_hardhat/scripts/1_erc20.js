@@ -54,7 +54,7 @@ const ethers = require("ethers");
 console.log(ethers.version);
 
 // Update info to match your contract.
-const cAddress = "";
+const cAddress = "0xe0F436ebE603Eb4Def3149bb82b578511B8d61dB";
 const cName = "MyERC20";
 
 // V5 Syntax for executing within an Hardhat project.
