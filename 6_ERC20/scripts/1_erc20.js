@@ -27,6 +27,26 @@
 
 // c. Deploy your token to your favorite net and test it:
 
+const hre = require("hardhat");
+
+async function deployMango() {
+
+    total = 100;
+
+    const mango = await hre.ethers.deployContract("MANGO", [total]);
+
+    await mango.waitForDeployment();
+
+    console.log(`Mango deployed to: ${mango.target} with ${total} total supply.`);
+};
+
+deployMango().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+
+return;
+
 // Try to execute the transfer and the transferFrom methods.
 
 require('dotenv').config();
@@ -34,12 +54,12 @@ const ethers = require("ethers");
 console.log(ethers.version);
 
 // Update info to match your contract.
-const cAddress = "";
+const cAddress = "0xe0F436ebE603Eb4Def3149bb82b578511B8d61dB";
 const cName = "MyERC20";
 
 // V5 Syntax for executing within an Hardhat project.
 const notUniMaUrl = process.env.NOT_UNIMA_URL_1;
-const notUniMaProvider = new ethers.providers.JsonRpcProvider(notUniMaUrl);
+const notUniMaProvider = new ethers.JsonRpcProvider(notUniMaUrl);
 
 // The deployer is the first address in the `accounts` field inside a 
 // network declaration in hardhat.config.js. 
