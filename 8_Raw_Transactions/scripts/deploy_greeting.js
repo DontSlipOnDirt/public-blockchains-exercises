@@ -7,18 +7,14 @@
 const hre = require("hardhat");
 
 async function main() {
+  
+  const Greeting = await hre.ethers.getContractFactory("Greeting");
+  const tc = await Greeting.deploy();
 
-  const ethAmount = "1";
-  const lockedAmount = hre.ethers.utils.parseEther(ethAmount);
-
-  const lock = await hre.ethers.deployContract("Lock4", {
-    value: lockedAmount,
-  });
-
-  await lock.waitForDeployment();
+  await tc.deployed();
 
   console.log(
-    `Lock with ${ethAmount} ETH and deployed to ${lock.target}`
+    `Test Contract deployed to ${tc.target}`
   );
 }
 

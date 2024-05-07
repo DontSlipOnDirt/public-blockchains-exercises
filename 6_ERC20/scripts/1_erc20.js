@@ -21,10 +21,6 @@
 
 // b. Harder. From scratch.
 
-// Checkpoint. What is purpose of the variable decimals?
-// Here is a good explanation from OpenZeppelin:
-// https://docs.openzeppelin.com/contracts/4.x/erc20#a-note-on-decimals
-
 // c. Deploy your token to your favorite net and test it:
 
 const hre = require("hardhat");
@@ -57,7 +53,6 @@ console.log(ethers.version);
 const cAddress = "0xe0F436ebE603Eb4Def3149bb82b578511B8d61dB";
 const cName = "MyERC20";
 
-// V5 Syntax for executing within an Hardhat project.
 const notUniMaUrl = process.env.NOT_UNIMA_URL_1;
 const notUniMaProvider = new ethers.JsonRpcProvider(notUniMaUrl);
 
@@ -84,13 +79,14 @@ const getContract = async(signer) => {
 
     // Adjust path as needed.
     // Fetch the ABI from the artifacts.
+    // It assumes that the contractname is the same as file name.
     const cABI = require("../artifacts/contracts/" + cName + 
                            ".sol/" + cName + ".json").abi;
 
     // Create the contract and print the address.
     const c = new ethers.Contract(cAddress, cABI, signer);
 
-    console.log(cName + " address: ", c.address);
+    console.log(cName + " address: ", c.target);
 
     return c;
 };
@@ -112,10 +108,10 @@ const transferFrom = async () => {
 
 
 
-
 // Checkpoint. What is purpose of the variable decimals?
 // Here is a good explanation from OpenZeppelin:
-// https://docs.openzeppelin.com/contracts/4.x/erc20#a-note-on-decimals
+// https://docs.openzeppelin.com/contracts/5.x/erc20#a-note-on-decimals
+
 
 // Exercise 2. Mint method.
 ///////////////////////////
